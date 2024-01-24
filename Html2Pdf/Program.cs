@@ -18,9 +18,6 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.MapGet("/", () => Results.Redirect("/swagger"))
-    .ExcludeFromDescription();
-
 app.MapPost("/", (IGeneratePdf generatePdf, IFormFile file,
     [FromQuery] Orientation orientation = Orientation.Portrait,
     [FromQuery] Size size = Size.A4,
@@ -41,6 +38,12 @@ app.MapPost("/", (IGeneratePdf generatePdf, IFormFile file,
     .Produces<FileResult>(200, MediaTypeNames.Application.Pdf)
     .Produces(500)
     .DisableAntiforgery();
+
+app.MapGet("/", () => Results.Redirect("/swagger"))
+    .ExcludeFromDescription();
+
+app.MapGet("/health", () => Results.Ok("healthy"))
+    .ExcludeFromDescription();
 
 app.UseSwagger();
 app.UseSwaggerUI();
