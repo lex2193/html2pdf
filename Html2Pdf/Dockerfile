@@ -2,7 +2,7 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 
-RUN apt-get update && apt-get install wkhtmltopdf --no-install-recommends && apt-get clean
+RUN apt-get update && apt-get install wkhtmltopdf -y --no-install-recommends && apt-get clean
 RUN mkdir /Linux && ln -s /usr/bin/wkhtmltopdf /Linux/wkhtmltopdf
 
 USER app
