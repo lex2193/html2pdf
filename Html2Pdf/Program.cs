@@ -24,13 +24,13 @@ app.MapGet("/", () => Results.Redirect("/swagger"))
 app.MapPost("/", (IGeneratePdf generatePdf, IFormFile file,
     [FromQuery] Orientation orientation = Orientation.Portrait,
     [FromQuery] Size size = Size.A4,
-    [FromQuery] bool lowQuality = false) =>
+    [FromQuery] bool? lowQuality = null) =>
 {
     generatePdf.SetConvertOptions(new ConvertOptions
     {
         PageOrientation = orientation,
         PageSize = size,
-        IsLowQuality = lowQuality
+        IsLowQuality = lowQuality ?? false
     });
     using var source = file.OpenReadStream();
     using var reader = new StreamReader(source);
